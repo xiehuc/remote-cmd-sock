@@ -12,7 +12,7 @@ macOS 下使用 [im-select](https://github.com/keaising/im-select.nvim) 切换�
 2. 配置 ssh config，例如：
    ```
    Host server
-       RemoteForward /tmp/rcmd.sock /tmp/rcmd.sock
+       RemoteForward 11450 /tmp/rcmd.sock
    ```
 3. `ssh server` 到远端
 4. 将 `rcmd_client.py` 复制到远端 $PATH 中，并`ln -s rcmd_client.py macism`

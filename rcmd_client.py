@@ -4,15 +4,15 @@ import socket
 import sys
 import json
 
-SOCKET_FILE = "/tmp/rcmd.sock"
+SERVER_PORT = 11450  # client 使用 port 更稳定，避免 socket 文件失效的问题
 
 
 def send_request(argv=None):
     """发送请求到服务器并获取响应"""
     try:
         # 创建 Unix domain socket 客户端
-        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        client.connect(SOCKET_FILE)
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect(("127.0.0.1", SERVER_PORT))
 
         client.sendall(json.dumps(argv).encode())
 
@@ -23,8 +23,6 @@ def send_request(argv=None):
 
     except ConnectionRefusedError:
         print("Error: Server is not running")
-    except FileNotFoundError:
-        print(f"Error: Socket file {SOCKET_FILE} not found")
     except Exception as e:
         print(f"Error: {str(e)}")
 
